@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sozip Launcher – Free Minecraft Launcher with Mods, Skins, FPS Boost & Servers</title>
+    <meta name="description" content="Download Sozip Launcher — the powerful free Minecraft launcher to install mods, boost FPS, upload skins, add cosmetics, and host your own servers easily.">
+    <meta name="keywords" content="Minecraft Launcher, Free Minecraft Launcher, Sozip Launcher, Minecraft Mods, Minecraft Skins, FPS Boost Minecraft, Minecraft Server Hosting">
+    <meta name="author" content="Sozip Launcher Team">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://sozip19op.github.io/Sozip-launcher/">
+    <link rel="icon" type="image/x-icon" href="images/logo.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --gradient-1: #00f2fe;
+            --gradient-2: #4facfe;
+            --gradient-3: #a855f7;
+            --gradient-4: #ec4899;
+            --dark: #050510;
+            --dark-card: rgba(255, 255, 255, 0.03);
+            --dark-card-strong: rgba(255, 255, 255, 0.06);
+            --border: rgba(255, 255, 255, 0.1);
+            --text: #ffffff;
+            --text-muted: rgba(255, 255, 255, 0.7);
+            --shadow-1: 0 10px 30px rgba(0, 0, 0, 0.5);
+            --shadow-2: 0 20px 60px rgba(0, 0, 0, 0.6);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--dark);
+            color: var(--text);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Animated Background */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background: linear-gradient(135deg, #050510 0%, #0a0a1a 100%);
+        }
+
+        .gradient-orbs {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.4;
+            animation: orb-float 20s ease-in-out infinite;
+        }
+
+        .orb-1 {
+            width: 600px;
+            height: 600px;
+            background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2));
+            top: -200px;
+            left: -100px;
+        }
+
+        .orb-2 {
+            width: 500px;
+            height: 500px;
+            background: linear-gradient(135deg, var(--gradient-3), var(--gradient-4));
+            bottom: -150px;
+            right: -100px;
+            animation-delay: -10s;
+        }
+
+        .orb-3 {
+            width: 400px;
+            height: 400px;
+            background: linear-gradient(135deg, #10b981, #06b6d4);
+            top: 40%;
+            right: 20%;
+            animation-delay: -5s;
+        }
+
+        @keyframes orb-float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(50px, -50px) scale(1.1); }
+            50% { transform: translate(-30px, 30px) scale(0.95); }
+            75% { transform: translate(-50px, -30px) scale(1.05); }
+        }
+
+        /* Grid Lines */
+        .grid-lines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background-image: 
+                linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+        }
+
+        /* Navbar */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 1.2rem 2rem;
+            background: rgba(5, 5, 16, 0.7);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border-bottom: 1px solid var(--border);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        nav.scrolled {
+            padding: 0.8rem 2rem;
+            background: rgba(5, 5, 16, 0.9);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.6rem;
+            font-weight: 900;
+            letter-spacing: -0.5px;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            background: transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 40px rgba(79, 172, 254, 0.4);
+        }
+
+        .logo-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .logo-text {
+            background: linear-gradient(135deg, var(--gradient-1), var(--gradient-3));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--gradient-1), var(--gradient-3));
+            transition: width 0.3s ease;
+            border-radius: 2px;
+        }
+
+        .nav-links a:hover {
+            color: var(--text);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 0.9rem 1.8rem;
+            border-radius: 16px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            border: none;
+            font-size: 0.95rem;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2), var(--gradient-3));
+            background-size: 200% 200%;
+            color: white;
+            box-shadow: 0 10px 40px rgba(79, 172, 254, 0.3);
+            animation: gradient-shift 4s ease infinite;
+        }
+
+        @keyframes gradient-shift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 20px 60px rgba(79, 172, 254, 0.4);
+        }
+
+        .btn-secondary {
+            background: var(--dark-card);
+            color: white;
+            border: 1px solid var(--border);
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-secondary:hover {
+            background: var(--dark-card-strong);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10rem 2rem 5rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 900px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 0.5rem 1.2rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+            animation: badge-bounce 3s ease-in-out infinite;
+        }
+
+        @keyframes badge-bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .hero-badge span {
+            width: 8px;
+            height: 8px;
+            background: #10b981;
+            border-radius: 50%;
+            animation: pulse-dot 2s infinite;
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+            50% { box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 8vw, 5.5rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            letter-spacing: -2px;
+        }
+
+        .hero h1 span {
+            background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2), var(--gradient-3), var(--gradient-4));
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradient-shift 6s ease infinite;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            color: var(--text-muted);
+            margin-bottom: 2.5rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 4rem;
+            justify-content: center;
+            margin-top: 5rem;
+            flex-wrap: wrap;
+        }
+
+        .stat {
+            text-align: center;
+            padding: 2rem;
+            background: var(--dark-card);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            min-width: 160px;
+            backdrop-filter: blur(10px);
+            transition: all 0.4s ease;
+        }
+
+        .stat:hover {
+            transform: translateY(-10px);
+            border-color: rgba(79, 172, 254, 0.4);
+            background: var(--dark-card-strong);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--gradient-1), var(--gradient-3));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.3rem;
+        }
+
+        .stat-label {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        /* Sections */
+        section {
+            padding: 8rem 2rem;
+            position: relative;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 5rem;
+        }
+
+        .section-tag {
+            display: inline-block;
+            padding: 0.5rem 1.2rem;
+            background: var(--dark-card);
+            border: 1px solid var(--border);
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--gradient-2);
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            font-weight: 800;
+            margin-bottom: 1rem;
+            letter-spacing: -1px;
+        }
+
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature {
+            background: var(--dark-card);
+            border: 1px solid var(--border);
+            border-radius: 28px;
+            padding: 2.5rem;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        .feature::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--gradient-1), var(--gradient-2), var(--gradient-3), var(--gradient-4));
+            transform: scaleX(0);
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .feature:hover {
+            transform: translateY(-15px);
+            border-color: rgba(79, 172, 254, 0.4);
+            background: var(--dark-card-strong);
+            box-shadow: var(--shadow-2);
+        }
+
+        .feature:hover::before {
+            transform: scaleX(1);
+        }
+
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 10px 30px rgba(79, 172, 254, 0.3);
+            transition: all 0.4s ease;
+        }
+
+        .feature:nth-child(2) .feature-icon { background: linear-gradient(135deg, var(--gradient-3), var(--gradient-4)); }
+        .feature:nth-child(3) .feature-icon { background: linear-gradient(135deg, #10b981, #06b6d4); }
+        .feature:nth-child(4) .feature-icon { background: linear-gradient(135deg, #f59e0b, #ef4444); }
+        .feature:nth-child(5) .feature-icon { background: linear-gradient(135deg, #8b5cf6, #06b6d4); }
+        .feature:nth-child(6) .feature-icon { background: linear-gradient(135deg, #ec4899, #8b5cf6); }
+        .feature:nth-child(7) .feature-icon { background: linear-gradient(135deg, #06b6d4, #10b981); }
+        .feature:nth-child(8) .feature-icon { background: linear-gradient(135deg, #ef4444, #f59e0b); }
+
+        .feature:hover .feature-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .feature h3 {
+            font-size: 1.4rem;
+            margin-bottom: 0.8rem;
+            font-weight: 700;
+        }
+
+        .feature p {
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+
+        /* Screenshots */
+        .screenshots {
+            background: linear-gradient(180deg, transparent, rgba(79, 172, 254, 0.02), transparent);
+        }
+
+        .slider-wrapper {
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .slider {
+            position: relative;
+            overflow: hidden;
+            border-radius: 32px;
+            border: 1px solid var(--border);
+            background: var(--dark-card);
+            padding: 1.5rem;
+            backdrop-filter: blur(20px);
+            box-shadow: var(--shadow-2);
+        }
+
+        .slides {
+            display: flex;
+            transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .slides img {
+            width: 100%;
+            flex-shrink: 0;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            object-fit: contain;
+            max-height: 700px;
+            background: rgba(0,0,0,0.3);
+        }
+
+        .slider-controls {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .slider-btn {
+            width: 64px;
+            height: 64px;
+            border-radius: 20px;
+            background: var(--dark-card);
+            border: 1px solid var(--border);
+            color: white;
+            font-size: 1.8rem;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(10px);
+        }
+
+        .slider-btn:hover {
+            background: var(--dark-card-strong);
+            transform: scale(1.15);
+            border-color: rgba(79, 172, 254, 0.5);
+        }
+
+        .slider-dots {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .slider-dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.25);
+            cursor: pointer;
+            transition: all 0.4s ease;
+        }
+
+        .slider-dot.active {
+            background: linear-gradient(135deg, var(--gradient-1), var(--gradient-3));
+            width: 50px;
+            border-radius: 12px;
+        }
+
+        /* Extra Links */
+        .extra-links {
+            padding: 6rem 2rem;
+            text-align: center;
+        }
+
+        .extra-links h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 2rem;
+        }
+
+        .extra-links-grid {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-more {
+            padding: 1.5rem 3rem;
+            background: var(--dark-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            color: white;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.05rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            min-width: 200px;
+        }
+
+        .btn-more:hover {
+            border-color: rgba(79, 172, 254, 0.5);
+            background: var(--dark-card-strong);
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-2);
+        }
+
+        /* Ad Section */
+        .ad-section {
+            text-align: center;
+            margin: 2rem 0;
+            padding: 2rem;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark-card);
+            border-top: 1px solid var(--border);
+            padding: 3rem 2rem 2rem;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .footer-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .footer-brand p {
+            color: var(--text-muted);
+            margin-left: 1rem;
+        }
+
+        footer p {
+            color: var(--text-muted);
+        }
+
+        /* Mobile */
+        .mobile-menu-btn {
+            display: none;
+            background: var(--dark-card);
+            border: 1px solid var(--border);
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        @media (max-width: 968px) {
+            .nav-links, .nav-buttons {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .hero-stats {
+                gap: 1.5rem;
+            }
+
+            .stat {
+                min-width: 130px;
+                padding: 1.5rem;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="animated-bg"></div>
+    <div class="gradient-orbs">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+    <div class="grid-lines"></div>
+
+    <nav>
+        <div class="nav-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <img src="images/logo.png" alt="Sozip Launcher Logo">
+                </div>
+                <span class="logo-text">Sozip Launcher</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="features.html">Features</a></li>
+                <li><a href="#screenshots">Screenshots</a></li>
+                <li><a href="download.html">Download</a></li>
+                <li><a href="news.html">News</a></li>
+                <li><a href="tutorial.html">Tutorial</a></li>
+            </ul>
+            <div class="nav-buttons">
+                <a href="upload.html" class="btn btn-secondary">Ely.by Skins</a>
+                <a href="download.html" class="btn btn-primary">
+                    <span>Download Now</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="7 10 12 15 17 10"></polyline>
+                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                    </svg>
+                </a>
+            </div>
+            <button class="mobile-menu-btn">☰</button>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-badge">
+                <span></span>
+                Free to Use
+            </div>
+            <h1>Launch Your <span>Minecraft Experience</span> to the Next Level</h1>
+            <p>Your all-in-one Minecraft launcher to install mods, upload skins, add cosmetics, boost FPS, and host servers — everything you need in one place.</p>
+            <div class="btn-group">
+                <a href="tutorial.html" class="btn btn-secondary">📖 Tutorial</a>
+                <a href="download.html" class="btn btn-primary">
+                    <span>Download Now</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="7 10 12 15 17 10"></polyline>
+                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                    </svg>
+                </a>
+                <a href="upload.html" class="btn btn-secondary">🎨 Ely.by Skins</a>
+            </div>
+            <div class="hero-stats">
+                <div class="stat">
+                    <div class="stat-number" id="downloadCounter">Loading...</div>
+                    <div class="stat-label">Downloads</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">100+</div>
+                    <div class="stat-label">Features</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">Free</div>
+                    <div class="stat-label">Forever</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="features">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-tag">✨ Features</div>
+                <h2 class="section-title">Everything You Need</h2>
+                <p class="section-subtitle">Powerful tools for the ultimate Minecraft experience</p>
+            </div>
+            <div class="features-grid">
+                <a href="features.html#modrinth-browser" class="feature">
+                    <div class="feature-icon">🔍</div>
+                    <h3>Built-in Modrinth Browser</h3>
+                    <p>Browse and install mods, modpacks, and plugins directly from Modrinth.</p>
+                </a>
+                <a href="features.html#free-playit-ip" class="feature">
+                    <div class="feature-icon">🌐</div>
+                    <h3>Free Playit.gg IP</h3>
+                    <p>Get a 1-hour free public IP for your server, manually renewable in the launcher. For lifetime IP, use playit.gg.</p>
+                </a>
+                <a href="features.html#fps-boost" class="feature">
+                    <div class="feature-icon">🚀</div>
+                    <h3>FPS Boost Modpacks</h3>
+                    <p>Use ZIP Boost modpack on Fabric, Fabulously Optimized modpack on Fabric/Quilt, or comparable modpacks for NeoForge/Forge.</p>
+                </a>
+                <a href="features.html#custom-skin" class="feature">
+                    <div class="feature-icon">🎨</div>
+                    <h3>Custom Skin System</h3>
+                    <p>Use Custom Skin Loader for capes. For skins, use Ely.by — Sozip Network is now Ely.by!</p>
+                </a>
+                <a href="features.html#migration-wizard" class="feature">
+                    <div class="feature-icon">🔄</div>
+                    <h3>Migration Wizard</h3>
+                    <p>Switch between versions with your mods, worlds, and settings in just one click.</p>
+                </a>
+                <a href="features.html#themes" class="feature">
+                    <div class="feature-icon">🎨</div>
+                    <h3>21 Unique Color Themes</h3>
+                    <p>Choose from 21 beautiful color themes, plus dark and light mode options.</p>
+                </a>
+                <a href="features.html#multi-account" class="feature">
+                    <div class="feature-icon">👤</div>
+                    <h3>Multiple Account Support</h3>
+                    <p>Add and switch between multiple Minecraft accounts easily.</p>
+                </a>
+                <a href="features.html#resource-shader" class="feature">
+                    <div class="feature-icon">📦</div>
+                    <h3>Resource/Shader Pack Installer</h3>
+                    <p>One-click installation for resource packs and shader packs.</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="screenshots" id="screenshots">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-tag">📸 Gallery</div>
+                <h2 class="section-title">Launcher Screenshots</h2>
+                <p class="section-subtitle">See Sozip Launcher in action</p>
+            </div>
+            <div class="slider-wrapper">
+                <div class="slider">
+                    <div class="slides" id="slides">
+                        <img src="images/ss1.png" alt="Screenshot 1">
+                        <img src="images/ss2.png" alt="Screenshot 2">
+                        <img src="images/ss3.png" alt="Screenshot 3">
+                        <img src="images/ss4.png" alt="Screenshot 4">
+                        <img src="images/ss5.png" alt="Screenshot 5">
+                        <img src="images/ss6.png" alt="Screenshot 6">
+                        <img src="images/ss7.png" alt="Screenshot 7">
+                        <img src="images/ss8.png" alt="Screenshot 8">
+                    </div>
+                </div>
+                <div class="slider-controls">
+                    <button class="slider-btn" id="prevBtn">❮</button>
+                    <button class="slider-btn" id="nextBtn">❯</button>
+                </div>
+                <div class="slider-dots" id="sliderDots"></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="extra-links">
+        <div class="container">
+            <h2>More from Sozip</h2>
+            <div class="extra-links-grid">
+                <a href="more/help.html" class="btn-more">💚 Help Us</a>
+                <a href="more/AboutUs.html" class="btn-more">👥 About Us</a>
+                <a href="more/contact.html" class="btn-more">📧 Contact Us</a>
+            </div>
+        </div>
+    </section>
+
+    <div class="ad-section">
+        <ins style="width: 728px; max-width:100%; height:90px"
+        data-width="728" data-height="90"
+        class="a6a379188c3"
+        data-domain="//data527.click"
+        data-affquery="/a535c32dacc824a33132/6a379188c3/?placementName=sozip_launcher">
+        <script src="//data527.click/js/responsive.js" async></script>
+        </ins>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <div class="logo-icon">
+                    <img src="images/logo.png" alt="Sozip Launcher Logo">
+                </div>
+                <span class="logo-text">Sozip Launcher</span>
+            </div>
+            <p>&copy; 2026 Sozip Launcher — Not affiliated with Mojang.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+
+        // Counter script
+        const API = "https://kmm-8eff.minecraftserversozip.workers.dev";
+
+        function formatNumber(num) {
+            num = parseInt(num, 10);
+            if (num >= 1000000) {
+                return (num / 1000000).toFixed(1).replace(/\.0$/, '') + "M";
+            } else if (num >= 1000) {
+                return (num / 1000).toFixed(1).replace(/\.0$/, '') + "K";
+            }
+            return num;
+        }
+
+        async function updateCounter() {
+            try {
+                const r = await fetch(API + "/get");
+                const v = await r.text();
+                document.getElementById("downloadCounter").innerText = formatNumber(v);
+            } catch(e) {
+                document.getElementById("downloadCounter").innerText = "Offline";
+            }
+        }
+
+        updateCounter();
+
+        // Slider
+        let index = 0;
+        const slides = document.getElementById("slides");
+        const total = slides.children.length;
+        const dotsContainer = document.getElementById('sliderDots');
+
+        // Create dots
+        for (let i = 0; i < total; i++) {
+            const dot = document.createElement('div');
+            dot.className = 'slider-dot' + (i === 0 ? ' active' : '');
+            dot.addEventListener('click', () => goToSlide(i));
+            dotsContainer.appendChild(dot);
+        }
+
+        const dots = dotsContainer.querySelectorAll('.slider-dot');
+
+        function showSlide(i) {
+            if (i >= total) index = 0;
+            if (i < 0) index = total - 1;
+            slides.style.transform = `translateX(-${index * 100}%)`;
+            dots.forEach((d, i) => d.classList.toggle('active', i === index));
+        }
+
+        function goToSlide(i) {
+            index = i;
+            showSlide(index);
+        }
+
+        function nextSlide() {
+            index++;
+            showSlide(index);
+        }
+
+        function prevSlide() {
+            index--;
+            showSlide(index);
+        }
+
+        document.getElementById("nextBtn").onclick = nextSlide;
+        document.getElementById("prevBtn").onclick = prevSlide;
+
+        setInterval(nextSlide, 5000);
+
+        // Keyboard controls
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') nextSlide();
+            if (e.key === 'ArrowLeft') prevSlide();
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.feature, .stat').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>

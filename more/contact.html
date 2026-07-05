@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact Us | Sozip Launcher</title>
+    <meta name="description" content="Get in touch with the Sozip Launcher team and join our Discord!">
+    <link rel="icon" type="image/x-icon" href="../images/logo.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --gradient-1: #00f2fe;
+            --gradient-2: #4facfe;
+            --gradient-3: #a855f7;
+            --gradient-4: #ec4899;
+            --dark: #050510;
+            --dark-card: rgba(255, 255, 255, 0.03);
+            --dark-card-strong: rgba(255, 255, 255, 0.06);
+            --border: rgba(255, 255, 255, 0.1);
+            --text: #ffffff;
+            --text-muted: rgba(255, 255, 255, 0.7);
+        }
+
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Outfit', sans-serif; background: var(--dark); color: var(--text); overflow-x: hidden; min-height: 100vh; display: flex; flex-direction: column; }
+
+        /* Animated Background */
+        .animated-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2; background: linear-gradient(135deg, #050510 0%, #0a0e14 100%); }
+        .gradient-orbs { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; overflow: hidden; }
+        .orb { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.4; animation: orb-float 20s ease-in-out infinite; }
+        .orb-1 { width: 600px; height: 600px; background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2)); top: -200px; left: -100px; }
+        .orb-2 { width: 500px; height: 500px; background: linear-gradient(135deg, var(--gradient-3), var(--gradient-4)); bottom: -150px; right: -100px; animation-delay: -10s; }
+        .orb-3 { width: 400px; height: 400px; background: linear-gradient(135deg, #10b981, #06b6d4); top: 40%; right: 20%; animation-delay: -5s; }
+        @keyframes orb-float { 0%, 100% { transform: translate(0, 0) scale(1); } 25% { transform: translate(50px, -50px) scale(1.1); } 50% { transform: translate(-30px, 30px) scale(0.95); } 75% { transform: translate(-50px, -30px) scale(1.05); } }
+        .grid-lines { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px); background-size: 50px 50px; pointer-events: none; }
+
+        /* Navbar */
+        nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; padding: 1.2rem 2rem; background: rgba(5, 5, 16, 0.7); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px); border-bottom: 1px solid var(--border); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        nav.scrolled { padding: 0.8rem 2rem; background: rgba(5, 5, 16, 0.9); }
+        .nav-container { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .logo { display: flex; align-items: center; gap: 12px; font-size: 1.6rem; font-weight: 900; letter-spacing: -0.5px; text-decoration: none; }
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            background: transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 40px rgba(79, 172, 254, 0.4);
+        }
+
+        .logo-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        .logo-text { background: linear-gradient(135deg, var(--gradient-1), var(--gradient-3)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+        .nav-links a { color: var(--text-muted); text-decoration: none; font-weight: 500; font-size: 0.95rem; transition: all 0.3s ease; position: relative; padding: 0.5rem 0; }
+        .nav-links a::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background: linear-gradient(90deg, var(--gradient-1), var(--gradient-3)); transition: width 0.3s ease; border-radius: 2px; }
+        .nav-links a:hover { color: var(--text); }
+        .nav-links a:hover::after { width: 100%; }
+        .nav-buttons { display: flex; gap: 1rem; }
+        .btn { display: inline-flex; align-items: center; gap: 8px; padding: 0.9rem 1.8rem; border-radius: 16px; font-weight: 600; text-decoration: none; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; border: none; font-size: 0.95rem; font-family: 'Outfit', sans-serif; }
+        .btn-primary { background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2), var(--gradient-3)); background-size: 200% 200%; color: white; box-shadow: 0 10px 40px rgba(79, 172, 254, 0.3); animation: gradient-shift 4s ease infinite; }
+        @keyframes gradient-shift { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+        .btn-primary:hover { transform: translateY(-4px) scale(1.02); box-shadow: 0 20px 60px rgba(79, 172, 254, 0.4); }
+        .btn-secondary { background: var(--dark-card); color: white; border: 1px solid var(--border); backdrop-filter: blur(10px); }
+        .btn-secondary:hover { background: var(--dark-card-strong); border-color: rgba(255, 255, 255, 0.2); transform: translateY(-3px); }
+        .mobile-menu-btn { display: none; background: var(--dark-card); border: 1px solid var(--border); width: 48px; height: 48px; border-radius: 12px; color: white; font-size: 1.5rem; cursor: pointer; }
+
+        /* Content */
+        .page-content { flex: 1; padding: 10rem 2rem 4rem; display: flex; justify-content: center; align-items: center; }
+        .card { background: var(--dark-card); padding: 3rem 2.5rem; border-radius: 24px; box-shadow: 0 20px 60px rgba(0,0,0,0.9); max-width: 600px; width: 100%; border: 1px solid var(--border); text-align: center; animation: fadeUp 0.8s ease; backdrop-filter: blur(10px); }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: none; } }
+
+        .discord-icon-large { width: 80px; height: 80px; background: #5865F2; border-radius: 20px; display: flex; justify-content: center; align-items: center; margin: 0 auto 25px; box-shadow: 0 0 30px rgba(88, 101, 242, 0.4); }
+
+        .card h1 { font-size: clamp(1.875rem, 4vw, 2.25rem); font-weight: 900; color: #fff; margin-bottom: 0.625rem; }
+        .highlight-blue { color: #5865F2; }
+        .support-text { color: var(--text-muted); font-size: 1rem; line-height: 1.7; margin-bottom: 2.5rem; }
+
+        /* Support Options */
+        .contact-methods { display: grid; gap: 1.25rem; margin-bottom: 2.5rem; }
+        .method-item { background: rgba(255,255,255,0.02); border: 1px solid var(--border); padding: 1.25rem; border-radius: 15px; display: flex; align-items: center; justify-content: space-between; transition: all 0.3s ease; }
+        .method-item:hover { border-color: #5865F2; background: rgba(88, 101, 242, 0.05); }
+        .method-label { text-align: left; }
+        .method-label span { display: block; font-size: 0.75rem; color: rgba(255,255,255,0.5); text-transform: uppercase; font-weight: 800; }
+        .method-label b { font-size: 1.125rem; color: #fff; display: flex; align-items: center; }
+
+        /* The Big Join Button */
+        .join-server-btn { display: block; background: #5865F2; color: white; text-decoration: none; padding: 1.25rem; border-radius: 14px; font-weight: 800; font-size: 1.125rem; transition: all 0.3s ease; box-shadow: 0 10px 20px rgba(88, 101, 242, 0.2); }
+        .join-server-btn:hover { transform: translateY(-5px); filter: brightness(1.1); box-shadow: 0 15px 30px rgba(88, 101, 242, 0.4); }
+
+        .status-dot { height: 10px; width: 10px; background-color: #23a559; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; margin-right: 6px; vertical-align: baseline; position: relative; top: -1px; }
+        .footer-note { margin-top: 1.875rem; font-size: 0.875rem; color: rgba(255,255,255,0.5); }
+
+        @media (max-width: 968px) {
+            .nav-links, .nav-buttons { display: none; }
+            .mobile-menu-btn { display: block; }
+            .card { padding: 2rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="animated-bg"></div>
+    <div class="gradient-orbs">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+    <div class="grid-lines"></div>
+
+    <nav>
+        <div class="nav-container">
+            <a href="../index.html" class="logo">
+                <div class="logo-icon"><img src="../images/logo.png" alt="Sozip Launcher Logo"></div>
+                <span class="logo-text">Sozip Launcher</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="../index.html#features">Features</a></li>
+                <li><a href="../index.html#screenshots">Screenshots</a></li>
+                <li><a href="../download.html">Download</a></li>
+                <li><a href="../tutorial.html">Tutorial</a></li>
+            </ul>
+            <div class="nav-buttons">
+                <a href="../upload.html" class="btn btn-secondary">Ely.by Skins</a>
+                <a href="../download.html" class="btn btn-primary">
+                    <span>Download Now</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="7 10 12 15 17 10"></polyline>
+                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                    </svg>
+                </a>
+            </div>
+            <button class="mobile-menu-btn">☰</button>
+        </div>
+    </nav>
+
+    <div class="page-content">
+        <div class="card">
+            <div class="discord-icon-large">
+                <svg width="50" height="50" viewBox="0 0 127.14 96.36" fill="white">
+                    <path d="M107.7,8.07A105.15,105.15,0,0,0,81.47,0a72.06,72.06,0,0,0-3.36,6.83A97.68,97.68,0,0,0,49,6.83,72.06,72.06,0,0,0,45.64,0,105.89,105.89,0,0,0,19.39,8.09C2.71,32.65-1.78,56.63.48,80.05a107.4,107.4,0,0,0,32.44,16.31,93.7,93.7,0,0,0,7.62-12.38,67.13,67.13,0,0,1-11.9-5.78c1,.75,2,1.53,3,2.28a77.7,77.7,0,0,0,61.14,0c1-.75,2-1.53,3-2.28a67.13,67.13,0,0,1-11.9,5.78,93.7,93.7,0,0,0,7.62,12.38,107.4,107.4,0,0,0,32.44-16.31C129.58,51.15,125,27.2,107.7,8.07ZM42.45,65.69c-6.22,0-11.41-5.71-11.41-12.73s5.06-12.73,11.41-12.73,11.41,5.71,11.41,12.73S48.67,65.69,42.45,65.69Zm42.24,0c-6.22,0-11.41-5.71-11.41-12.73s5.06-12.73,11.41-12.73,11.41,5.71,11.41,12.73S90.91,65.69,84.69,65.69Z"/>
+                </svg>
+            </div>
+
+            <h1>Get in <span class="highlight-blue">Touch</span></h1>
+            <p class="support-text">
+                Need help with the launcher? Found a bug? Or just want to suggest a new feature? Join our official community server!
+            </p>
+
+            <div class="contact-methods">
+                <div class="method-item">
+                    <div class="method-label">
+                        <span>Direct Message</span>
+                        <b>sozip19op</b>
+                    </div>
+                    <div style="font-size: 0.75rem; color: #5865F2; font-weight: 800;">OWNER</div>
+                </div>
+
+                <div class="method-item">
+                    <div class="method-label">
+                        <span>Instagram</span>
+                        <b>@sozip19op</b>
+                    </div>
+                    <a href="https://instagram.com/sozip19op" target="_blank" style="font-size: 0.75rem; color: #E4405F; font-weight: 800; text-decoration: none;">FOLLOW</a>
+                </div>
+
+                <div class="method-item">
+                    <div class="method-label">
+                        <span>Support Status</span>
+                        <b><span class="status-dot"></span> Online</b>
+                    </div>
+                    <div style="font-size: 0.75rem; color: var(--text-muted);">24/7 TICKETS</div>
+                </div>
+            </div>
+
+            <a href="https://discord.gg/da86yKz7" class="join-server-btn" target="_blank">
+                JOIN OFFICIAL DISCORD
+            </a>
+
+            <p class="footer-note">
+                Response time is usually within 12-24 hours.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fahad Imran | Developer & Creator</title>
+    <meta name="description" content="Portfolio of Fahad Imran (Sozip) - Developer & Content Creator from Lahore, Pakistan">
+    <link rel="icon" type="image/x-icon" href="images/logo.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --gradient-1: #00f2fe;
+            --gradient-2: #4facfe;
+            --gradient-3: #a855f7;
+            --gradient-4: #ec4899;
+            --dark: #050510;
+            --dark-card: rgba(255, 255, 255, 0.03);
+            --dark-card-strong: rgba(255, 255, 255, 0.06);
+            --border: rgba(255, 255, 255, 0.1);
+            --text: #ffffff;
+            --text-muted: rgba(255, 255, 255, 0.7);
+            --discord-blurple: #5865F2;
+        }
+
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Outfit', sans-serif; background: var(--dark); color: var(--text); overflow-x: hidden; min-height: 100vh; display: flex; flex-direction: column; }
+
+        /* Animated Background */
+        .animated-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2; background: linear-gradient(135deg, #050510 0%, #0a0e14 100%); }
+        .gradient-orbs { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; overflow: hidden; }
+        .orb { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.4; animation: orb-float 20s ease-in-out infinite; }
+        .orb-1 { width: 600px; height: 600px; background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2)); top: -200px; left: -100px; }
+        .orb-2 { width: 500px; height: 500px; background: linear-gradient(135deg, var(--gradient-3), var(--gradient-4)); bottom: -150px; right: -100px; animation-delay: -10s; }
+        .orb-3 { width: 400px; height: 400px; background: linear-gradient(135deg, #10b981, #06b6d4); top: 40%; right: 20%; animation-delay: -5s; }
+        @keyframes orb-float { 0%, 100% { transform: translate(0, 0) scale(1); } 25% { transform: translate(50px, -50px) scale(1.1); } 50% { transform: translate(-30px, 30px) scale(0.95); } 75% { transform: translate(-50px, -30px) scale(1.05); } }
+        .grid-lines { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px); background-size: 50px 50px; pointer-events: none; }
+
+        /* Navbar */
+        nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; padding: 1.2rem 2rem; background: rgba(5, 5, 16, 0.7); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px); border-bottom: 1px solid var(--border); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        nav.scrolled { padding: 0.8rem 2rem; background: rgba(5, 5, 16, 0.9); }
+        .nav-container { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .logo { display: flex; align-items: center; gap: 12px; font-size: 1.6rem; font-weight: 900; letter-spacing: -0.5px; text-decoration: none; }
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            background: transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 40px rgba(79, 172, 254, 0.4);
+        }
+
+        .logo-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        .logo-text { background: linear-gradient(135deg, var(--gradient-1), var(--gradient-3)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+        .nav-links a { color: var(--text-muted); text-decoration: none; font-weight: 500; font-size: 0.95rem; transition: all 0.3s ease; position: relative; padding: 0.5rem 0; }
+        .nav-links a::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background: linear-gradient(90deg, var(--gradient-1), var(--gradient-3)); transition: width 0.3s ease; border-radius: 2px; }
+        .nav-links a:hover { color: var(--text); }
+        .nav-links a:hover::after { width: 100%; }
+        .nav-buttons { display: flex; gap: 1rem; }
+        .btn { display: inline-flex; align-items: center; gap: 8px; padding: 0.9rem 1.8rem; border-radius: 16px; font-weight: 600; text-decoration: none; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; border: none; font-size: 0.95rem; font-family: 'Outfit', sans-serif; }
+        .btn-primary { background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2), var(--gradient-3)); background-size: 200% 200%; color: white; box-shadow: 0 10px 40px rgba(79, 172, 254, 0.3); animation: gradient-shift 4s ease infinite; }
+        @keyframes gradient-shift { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+        .btn-primary:hover { transform: translateY(-4px) scale(1.02); box-shadow: 0 20px 60px rgba(79, 172, 254, 0.4); }
+        .btn-secondary { background: var(--dark-card); color: white; border: 1px solid var(--border); backdrop-filter: blur(10px); }
+        .btn-secondary:hover { background: var(--dark-card-strong); border-color: rgba(255, 255, 255, 0.2); transform: translateY(-3px); }
+        .mobile-menu-btn { display: none; background: var(--dark-card); border: 1px solid var(--border); width: 48px; height: 48px; border-radius: 12px; color: white; font-size: 1.5rem; cursor: pointer; }
+
+        /* Content */
+        .page-content { flex: 1; padding: 10rem 2rem 4rem; }
+        .wrapper { max-width: 800px; margin: 0 auto; }
+
+        /* Profile Header */
+        .profile-header { background: var(--dark-card); border: 1px solid var(--border); border-radius: 30px; padding: 2.5rem; backdrop-filter: blur(10px); text-align: center; margin-bottom: 2.5rem; animation: fadeUp 0.8s ease; }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: none; } }
+        .pfp-container { position: relative; width: 140px; height: 140px; margin: 0 auto 1.5rem; }
+        .pfp { width: 100%; height: 100%; border-radius: 50%; border: 3px solid var(--gradient-2); box-shadow: 0 0 30px rgba(79, 172, 254, 0.3); }
+        .profile-header h1 { font-size: clamp(2rem, 4vw, 2.5rem); margin: 10px 0; background: linear-gradient(90deg, #fff, #94a3b8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-weight: 800; }
+        .tagline { color: var(--gradient-2); font-weight: 700; letter-spacing: 1px; text-transform: uppercase; font-size: 0.9rem; display: block; margin-bottom: 1.5rem; }
+
+        /* Stats Grid */
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-top: 1.5rem; }
+        .stat-card { background: rgba(255,255,255,0.02); padding: 1.25rem; border-radius: 16px; border: 1px solid var(--border); text-align: center; transition: all 0.3s ease; }
+        .stat-card:hover { border-color: rgba(79, 172, 254, 0.3); background: var(--dark-card-strong); transform: translateY(-3px); }
+        .stat-label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; display: block; font-weight: 600; letter-spacing: 0.5px; margin-bottom: 0.5rem; }
+        .stat-value { font-weight: 700; font-size: 1.1rem; }
+
+        /* Sections */
+        .section-title { font-size: 1.5rem; border-left: 4px solid var(--gradient-2); padding-left: 15px; margin: 2.5rem 0 1.25rem; font-weight: 800; }
+        .content-box { background: var(--dark-card); padding: 2rem; border-radius: 24px; border: 1px solid var(--border); color: var(--text-muted); backdrop-filter: blur(10px); line-height: 1.8; }
+        .content-box strong { color: white; font-weight: 700; }
+        .content-box p { margin-bottom: 1rem; }
+        .content-box p:last-child { margin-bottom: 0; }
+
+        /* Links Container */
+        .links-container { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-top: 1.25rem; }
+        .port-btn { padding: 1.25rem; border-radius: 16px; text-decoration: none; font-weight: 700; text-align: center; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); display: flex; align-items: center; justify-content: center; gap: 0.5rem; font-size: 1rem; }
+        .port-btn:hover { transform: translateY(-4px); box-shadow: 0 15px 30px rgba(0,0,0,0.4); }
+        .port-btn-yt { background: #ff0000; color: white; }
+        .port-btn-git { background: #24292e; color: white; border: 1px solid var(--border); }
+        .port-btn-blog { background: #f57c00; color: white; } 
+        .port-btn-discord { background: var(--discord-blurple); color: white; }
+        .port-btn-main { background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2), var(--gradient-3)); background-size: 200% 200%; color: white; grid-column: span 2; animation: gradient-shift 4s ease infinite; }
+
+        /* Footer */
+        .page-footer { text-align: center; margin-top: 3.75rem; color: var(--text-muted); font-size: 0.875rem; }
+
+        @media (max-width: 968px) {
+            .nav-links, .nav-buttons { display: none; }
+            .mobile-menu-btn { display: block; }
+        }
+        @media (max-width: 600px) {
+            .links-container { grid-template-columns: 1fr; }
+            .port-btn-main { grid-column: span 1; }
+            .profile-header { padding: 2rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="animated-bg"></div>
+    <div class="gradient-orbs">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+    <div class="grid-lines"></div>
+
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <div class="logo-icon"><img src="images/logo.png" alt="Sozip Launcher Logo"></div>
+                <span class="logo-text">Sozip Launcher</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html#features">Features</a></li>
+                <li><a href="index.html#screenshots">Screenshots</a></li>
+                <li><a href="download.html">Download</a></li>
+                <li><a href="tutorial.html">Tutorial</a></li>
+            </ul>
+            <div class="nav-buttons">
+                <a href="upload.html" class="btn btn-secondary">Ely.by Skins</a>
+                <a href="download.html" class="btn btn-primary">
+                    <span>Download Now</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="7 10 12 15 17 10"></polyline>
+                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                    </svg>
+                </a>
+            </div>
+            <button class="mobile-menu-btn">☰</button>
+        </div>
+    </nav>
+
+    <div class="page-content">
+        <div class="wrapper">
+            <header class="profile-header">
+                <div class="pfp-container">
+                    <img src="https://yt3.googleusercontent.com/swv-YN78g_whUsds7vxNUwS_p7VUQWv4KAEbnSZLSDsu-Ko1AYJoriaqKLiBgcquNtrdb5pTZw=s160-c-k-c0x00ffffff-no-rj" alt="Fahad Imran" class="pfp">
+                </div>
+                <h1>Fahad Imran</h1>
+                <span class="tagline">Developer & Content Creator (Sozip)</span>
+                
+                <div class="stats-grid">
+                    <div class="stat-card"><span class="stat-label">Location</span><span class="stat-value">Lahore, PK 🇵🇰</span></div>
+                    <div class="stat-card"><span class="stat-label">OS</span><span class="stat-value">Lubuntu</span></div>
+                    <div class="stat-card"><span class="stat-label">Engine</span><span class="stat-value">Godot</span></div>
+                    <div class="stat-card"><span class="stat-label">Languages</span><span class="stat-value">Python / Lua / C</span></div>
+                </div>
+            </header>
+
+            <h2 class="section-title">Introduction</h2>
+            <div class="content-box">
+                <p>
+                    My name is <strong>Fahad Imran</strong>, though I am known across the digital landscape as <strong>Sozip</strong>. Based in the vibrant city of Lahore, Pakistan, I have cultivated a deep passion for technology and game development. As a dedicated developer and content creator, I specialize in building tools that bridge the gap between technical complexity and user accessibility.
+                </p>
+                <p>
+                    My philosophy centers on <strong>efficiency and performance</strong>. I primarily operate on <strong>Lubuntu</strong>, utilizing its lightweight architecture to push my hardware to its limits. This focus carries over into my journey with the <strong>Godot Engine</strong>, where I hone my skills in 2D and 3D design. Whether scripting in Python, Lua, or C, my goal is always to create software that is bloat-free and highly functional.
+                </p>
+            </div>
+
+            <h2 class="section-title">Portfolio & Community</h2>
+            <div class="links-container">
+                <a href="https://jhourcegames.blogspot.com/" class="port-btn port-btn-blog" target="_blank">Jhource Games</a>
+                <a href="https://www.youtube.com/@sozip19op" class="port-btn port-btn-yt" target="_blank">YouTube Channel</a>
+                <a href="https://github.com/sozip19op/YOUZIP" class="port-btn port-btn-git" target="_blank">YOUZIP</a>
+                <a href="https://discord.gg/Xv7ZrTVeV8" class="port-btn port-btn-discord" target="_blank">Discord Server</a>
+                <a href="http://sozip.gamer.gd" class="port-btn port-btn-main" target="_blank">Official Sozip Launcher</a>
+            </div>
+
+            <div class="page-footer">
+                © 2026 Fahad Imran (Sozip). Built for Performance.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html>

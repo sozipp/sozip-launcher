@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tutorial | Sozip Launcher</title>
+    <meta name="description" content="Learn how to use Sozip Launcher with our step-by-step video tutorial!">
+    <link rel="icon" type="image/x-icon" href="images/logo.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --gradient-1: #00f2fe;
+            --gradient-2: #4facfe;
+            --gradient-3: #a855f7;
+            --gradient-4: #ec4899;
+            --dark: #050510;
+            --dark-card: rgba(255, 255, 255, 0.03);
+            --dark-card-strong: rgba(255, 255, 255, 0.06);
+            --border: rgba(255, 255, 255, 0.1);
+            --text: #ffffff;
+            --text-muted: rgba(255, 255, 255, 0.7);
+            --shadow-1: 0 10px 30px rgba(0, 0, 0, 0.5);
+            --shadow-2: 0 20px 60px rgba(0, 0, 0, 0.6);
+        }
+
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Outfit', sans-serif; background: var(--dark); color: var(--text); overflow-x: hidden; min-height: 100vh; display: flex; flex-direction: column; }
+
+        /* Animated Background */
+        .animated-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2; background: linear-gradient(135deg, #050510 0%, #0a0a1a 100%); }
+        .gradient-orbs { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; overflow: hidden; }
+        .orb { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.4; animation: orb-float 20s ease-in-out infinite; }
+        .orb-1 { width: 600px; height: 600px; background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2)); top: -200px; left: -100px; }
+        .orb-2 { width: 500px; height: 500px; background: linear-gradient(135deg, var(--gradient-3), var(--gradient-4)); bottom: -150px; right: -100px; animation-delay: -10s; }
+        .orb-3 { width: 400px; height: 400px; background: linear-gradient(135deg, #10b981, #06b6d4); top: 40%; right: 20%; animation-delay: -5s; }
+        @keyframes orb-float { 0%, 100% { transform: translate(0, 0) scale(1); } 25% { transform: translate(50px, -50px) scale(1.1); } 50% { transform: translate(-30px, 30px) scale(0.95); } 75% { transform: translate(-50px, -30px) scale(1.05); } }
+        .grid-lines { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px); background-size: 50px 50px; pointer-events: none; }
+
+        /* Navbar */
+        nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; padding: 1.2rem 2rem; background: rgba(5, 5, 16, 0.7); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px); border-bottom: 1px solid var(--border); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        nav.scrolled { padding: 0.8rem 2rem; background: rgba(5, 5, 16, 0.9); }
+        .nav-container { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .logo { display: flex; align-items: center; gap: 12px; font-size: 1.6rem; font-weight: 900; letter-spacing: -0.5px; text-decoration: none; }
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            background: transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 40px rgba(79, 172, 254, 0.4);
+        }
+
+        .logo-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        .logo-text { background: linear-gradient(135deg, var(--gradient-1), var(--gradient-3)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+        .nav-links a { color: var(--text-muted); text-decoration: none; font-weight: 500; font-size: 0.95rem; transition: all 0.3s ease; position: relative; padding: 0.5rem 0; }
+        .nav-links a::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background: linear-gradient(90deg, var(--gradient-1), var(--gradient-3)); transition: width 0.3s ease; border-radius: 2px; }
+        .nav-links a:hover { color: var(--text); }
+        .nav-links a:hover::after { width: 100%; }
+        .nav-buttons { display: flex; gap: 1rem; }
+        .btn { display: inline-flex; align-items: center; gap: 8px; padding: 0.9rem 1.8rem; border-radius: 16px; font-weight: 600; text-decoration: none; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; border: none; font-size: 0.95rem; font-family: 'Outfit', sans-serif; }
+        .btn-primary { background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2), var(--gradient-3)); background-size: 200% 200%; color: white; box-shadow: 0 10px 40px rgba(79, 172, 254, 0.3); animation: gradient-shift 4s ease infinite; }
+        @keyframes gradient-shift { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+        .btn-primary:hover { transform: translateY(-4px) scale(1.02); box-shadow: 0 20px 60px rgba(79, 172, 254, 0.4); }
+        .btn-secondary { background: var(--dark-card); color: white; border: 1px solid var(--border); backdrop-filter: blur(10px); }
+        .btn-secondary:hover { background: var(--dark-card-strong); border-color: rgba(255, 255, 255, 0.2); transform: translateY(-3px); }
+        .mobile-menu-btn { display: none; background: var(--dark-card); border: 1px solid var(--border); width: 48px; height: 48px; border-radius: 12px; color: white; font-size: 1.5rem; cursor: pointer; }
+
+        /* Content */
+        .page-content { flex: 1; padding: 10rem 2rem 4rem; }
+        .container { max-width: 900px; margin: 0 auto; }
+        .page-header { text-align: center; margin-bottom: 3rem; animation: fadeUp 0.8s ease; }
+        .page-tag { display: inline-block; padding: 0.5rem 1.2rem; background: var(--dark-card); border: 1px solid var(--border); border-radius: 50px; font-size: 0.85rem; font-weight: 600; color: var(--gradient-2); margin-bottom: 1rem; }
+        .page-header h1 { font-size: clamp(2.5rem, 5vw, 3.5rem); font-weight: 900; background: linear-gradient(90deg, var(--gradient-1), var(--gradient-2), var(--gradient-3), var(--gradient-4)); background-size: 200% 200%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; animation: gradient-shift 6s ease infinite; margin-bottom: 1rem; }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: none; } }
+
+        /* Video Box */
+        .video-box { background: var(--dark-card); border: 1px solid var(--border); border-radius: 24px; padding: 2rem; backdrop-filter: blur(10px); transition: all 0.4s ease; max-width: 600px; margin: 0 auto; animation: fadeUp 0.9s ease; }
+        .video-box:hover { border-color: rgba(79, 172, 254, 0.3); background: var(--dark-card-strong); transform: translateY(-5px); box-shadow: var(--shadow-2); }
+        .video-thumbnail { width: 100%; border-radius: 16px; cursor: pointer; transition: transform 0.3s ease; }
+        .video-thumbnail:hover { transform: scale(1.02); }
+        .video-iframe { width: 100%; height: 340px; border-radius: 16px; border: none; }
+        .yt-link { display: inline-flex; align-items: center; gap: 8px; margin-top: 1.5rem; color: var(--gradient-2); text-decoration: none; font-weight: 700; font-size: 1rem; transition: all 0.3s ease; }
+        .yt-link:hover { color: var(--gradient-1); text-decoration: underline; }
+
+        .ad-container { text-align: center; margin: 2rem 0; padding: 1rem; }
+
+        /* Footer */
+        footer { background: var(--dark-card); border-top: 1px solid var(--border); padding: 3rem 2rem 2rem; text-align: center; color: var(--text-muted); }
+        .footer-content { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 2rem; }
+        .footer-brand { display: flex; align-items: center; gap: 12px; }
+
+        @media (max-width: 968px) {
+            .nav-links, .nav-buttons { display: none; }
+            .mobile-menu-btn { display: block; }
+            .video-box { padding: 1.5rem; }
+            .video-iframe { height: 250px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="animated-bg"></div>
+    <div class="gradient-orbs">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+    <div class="grid-lines"></div>
+
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <div class="logo-icon"><img src="images/logo.png" alt="Sozip Launcher Logo"></div>
+                <span class="logo-text">Sozip Launcher</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="features.html">Features</a></li>
+                <li><a href="index.html#screenshots">Screenshots</a></li>
+                <li><a href="download.html">Download</a></li>
+                <li><a href="news.html">News</a></li>
+                <li><a href="tutorial.html">Tutorial</a></li>
+            </ul>
+            <div class="nav-buttons">
+                <a href="upload.html" class="btn btn-secondary">Ely.by Skins</a>
+                <a href="download.html" class="btn btn-primary">
+                    <span>Download Now</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="7 10 12 15 17 10"></polyline>
+                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                    </svg>
+                </a>
+            </div>
+            <button class="mobile-menu-btn">☰</button>
+        </div>
+    </nav>
+
+    <div class="page-content">
+        <div class="container">
+            <div class="page-header">
+                <div class="page-tag">📺 Tutorial</div>
+                <h1>Learn How To Use Sozip Launcher</h1>
+            </div>
+
+            <div class="ad-container">
+                <ins style="width: 728px; max-width:100%; height:90px" data-width="728" data-height="90" class="x5526d554dd" data-domain="//data527.click" data-affquery="/a535c32dacc824a33132/5526d554dd/?placementName=sozip_launcher_tutorial">
+                    <script src="//data527.click/js/responsive.js" async></script>
+                </ins>
+            </div>
+
+            <div class="video-box">
+                <script> const videoId = "g1bWvMTfDEI"; </script>
+                <div id="player"></div>
+                <a id="ytLink" target="_blank" class="yt-link">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="#FF0000">
+                        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                    </svg>
+                    Watch on YouTube
+                </a>
+            </div>
+
+            <div class="ad-container">
+                <ins style="width: 728px; max-width:100%; height:90px" data-width="728" data-height="90" class="x5526d554dd" data-domain="//data527.click" data-affquery="/a535c32dacc824a33132/5526d554dd/?placementName=sozip_launcher_tutorial">
+                    <script src="//data527.click/js/responsive.js" async></script>
+                </ins>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <div class="logo-icon"><img src="images/logo.png" alt="Sozip Launcher Logo"></div>
+                <span class="logo-text">Sozip Launcher</span>
+            </div>
+            <p>&copy; 2026 Sozip Launcher | All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+
+        // Video player
+        const thumbnail = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+        const youtubeUrl = `https://www.youtube.com/watch?v=${videoId}`;
+        const embedUrl = `https://www.youtube.com/embed/${videoId}`;
+        document.getElementById("player").innerHTML = `<img src="${thumbnail}" class="video-thumbnail" onclick="playVideo()" alt="Tutorial Video" />`;
+        document.getElementById("ytLink").href = youtubeUrl;
+
+        function playVideo() {
+            document.getElementById("player").innerHTML = `<iframe class="video-iframe" src="${embedUrl}?autoplay=1" allowfullscreen></iframe>`;
+        }
+    </script>
+</body>
+</html>

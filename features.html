@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sozip Launcher - Features</title>
+    <meta name="description" content="Explore all the powerful features of Sozip Launcher — mods, skins, FPS boost, server hosting and more!">
+    <meta name="keywords" content="Sozip Launcher features, Minecraft mods, Minecraft skins, Minecraft server hosting">
+    <meta name="author" content="Sozip Launcher Team">
+    <meta name="robots" content="index, follow">
+    <link rel="icon" type="image/x-icon" href="images/logo.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --gradient-1: #00f2fe;
+            --gradient-2: #4facfe;
+            --gradient-3: #a855f7;
+            --gradient-4: #ec4899;
+            --dark: #050510;
+            --dark-card: rgba(255, 255, 255, 0.03);
+            --dark-card-strong: rgba(255, 255, 255, 0.06);
+            --border: rgba(255, 255, 255, 0.1);
+            --text: #ffffff;
+            --text-muted: rgba(255, 255, 255, 0.7);
+            --shadow-1: 0 10px 30px rgba(0, 0, 0, 0.5);
+            --shadow-2: 0 20px 60px rgba(0, 0, 0, 0.6);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--dark);
+            color: var(--text);
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Animated Background */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background: linear-gradient(135deg, #050510 0%, #0a0a1a 100%);
+        }
+
+        .gradient-orbs {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.4;
+            animation: orb-float 20s ease-in-out infinite;
+        }
+
+        .orb-1 {
+            width: 600px;
+            height: 600px;
+            background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2));
+            top: -200px;
+            left: -100px;
+        }
+
+        .orb-2 {
+            width: 500px;
+            height: 500px;
+            background: linear-gradient(135deg, var(--gradient-3), var(--gradient-4));
+            bottom: -150px;
+            right: -100px;
+            animation-delay: -10s;
+        }
+
+        .orb-3 {
+            width: 400px;
+            height: 400px;
+            background: linear-gradient(135deg, #10b981, #06b6d4);
+            top: 40%;
+            right: 20%;
+            animation-delay: -5s;
+        }
+
+        @keyframes orb-float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(50px, -50px) scale(1.1); }
+            50% { transform: translate(-30px, 30px) scale(0.95); }
+            75% { transform: translate(-50px, -30px) scale(1.05); }
+        }
+
+        /* Grid Lines */
+        .grid-lines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+        }
+
+        /* Navbar */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 1.2rem 2rem;
+            background: rgba(5, 5, 16, 0.7);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border-bottom: 1px solid var(--border);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        nav.scrolled {
+            padding: 0.8rem 2rem;
+            background: rgba(5, 5, 16, 0.9);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.6rem;
+            font-weight: 900;
+            letter-spacing: -0.5px;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            background: transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 40px rgba(79, 172, 254, 0.4);
+        }
+
+        .logo-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .logo-text {
+            background: linear-gradient(135deg, var(--gradient-1), var(--gradient-3));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--gradient-1), var(--gradient-3));
+            transition: width 0.3s ease;
+            border-radius: 2px;
+        }
+
+        .nav-links a:hover {
+            color: var(--text);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 0.9rem 1.8rem;
+            border-radius: 16px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            border: none;
+            font-size: 0.95rem;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2), var(--gradient-3));
+            background-size: 200% 200%;
+            color: white;
+            box-shadow: 0 10px 40px rgba(79, 172, 254, 0.3);
+            animation: gradient-shift 4s ease infinite;
+        }
+
+        @keyframes gradient-shift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 20px 60px rgba(79, 172, 254, 0.4);
+        }
+
+        .btn-secondary {
+            background: var(--dark-card);
+            color: white;
+            border: 1px solid var(--border);
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-secondary:hover {
+            background: var(--dark-card-strong);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+        }
+
+        /* Content */
+        .page-content {
+            flex: 1;
+            padding: 12rem 2rem 6rem;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 4rem;
+            animation: fadeUp 0.8s ease;
+        }
+
+        .page-tag {
+            display: inline-block;
+            padding: 0.5rem 1.2rem;
+            background: var(--dark-card);
+            border: 1px solid var(--border);
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--gradient-2);
+            margin-bottom: 1rem;
+        }
+
+        .page-header h1 {
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            font-weight: 900;
+            background: linear-gradient(90deg, var(--gradient-1), var(--gradient-2), var(--gradient-3), var(--gradient-4));
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradient-shift 6s ease infinite;
+            margin-bottom: 1rem;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: none;
+            }
+        }
+
+        section {
+            margin-bottom: 3rem;
+            background: var(--dark-card);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 2.5rem;
+            backdrop-filter: blur(10px);
+            transition: all 0.4s ease;
+        }
+
+        section:hover {
+            border-color: rgba(79, 172, 254, 0.3);
+            background: var(--dark-card-strong);
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-2);
+        }
+
+        section h2 {
+            font-size: 1.75rem;
+            font-weight: 800;
+            margin-bottom: 1.25rem;
+            background: linear-gradient(90deg, var(--gradient-1), var(--gradient-3));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        p {
+            line-height: 1.8;
+            margin-bottom: 1rem;
+            color: var(--text-muted);
+        }
+
+        a {
+            color: var(--gradient-2);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        a:hover {
+            color: var(--gradient-1);
+            text-decoration: underline;
+        }
+
+        ul, ol {
+            margin: 1.5rem 0 1.5rem 2rem;
+            line-height: 1.9;
+            color: var(--text-muted);
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        code {
+            background: rgba(79, 172, 254, 0.1);
+            border: 1px solid rgba(79, 172, 254, 0.2);
+            padding: 0.25rem 0.5rem;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            color: var(--gradient-2);
+        }
+
+        .note {
+            background: rgba(79, 172, 254, 0.08);
+            border: 1px solid rgba(79, 172, 254, 0.2);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-left: 4px solid var(--gradient-2);
+        }
+
+        .note p {
+            margin-bottom: 0;
+        }
+
+        .ad-container {
+            text-align: center;
+            margin: 2rem 0;
+            padding: 1rem;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark-card);
+            border-top: 1px solid var(--border);
+            padding: 3rem 2rem 2rem;
+            text-align: center;
+            color: var(--text-muted);
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .footer-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        /* Mobile */
+        .mobile-menu-btn {
+            display: none;
+            background: var(--dark-card);
+            border: 1px solid var(--border);
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        @media (max-width: 968px) {
+            .nav-links, .nav-buttons {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            section {
+                padding: 1.75rem;
+            }
+
+            ul, ol {
+                margin-left: 1.25rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="animated-bg"></div>
+    <div class="gradient-orbs">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+    <div class="grid-lines"></div>
+
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" style="text-decoration: none;">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <img src="images/logo.png" alt="Sozip Launcher Logo">
+                    </div>
+                    <span class="logo-text">Sozip Launcher</span>
+                </div>
+            </a>
+            <ul class="nav-links">
+                <li><a href="features.html">Features</a></li>
+                <li><a href="index.html#screenshots">Screenshots</a></li>
+                <li><a href="download.html">Download</a></li>
+                <li><a href="news.html">News</a></li>
+                <li><a href="tutorial.html">Tutorial</a></li>
+            </ul>
+            <div class="nav-buttons">
+                <a href="upload.html" class="btn btn-secondary">Ely.by Skins</a>
+                <a href="download.html" class="btn btn-primary">
+                    <span>Download Now</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="7 10 12 15 17 10"></polyline>
+                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                    </svg>
+                </a>
+            </div>
+            <button class="mobile-menu-btn">☰</button>
+        </div>
+    </nav>
+
+    <div class="page-content">
+        <div class="container">
+            <div class="page-header">
+                <div class="page-tag">⚡ Features</div>
+                <h1>Sozip Launcher Features</h1>
+            </div>
+
+            <!-- Top Banner Ad -->
+            <div class="ad-container">
+                <ins style="width: 728px; max-width: 100%; height: 90px" data-width="728" data-height="90" class="efe36179117" data-domain="//data527.click" data-affquery="/a535c32dacc824a33132/fe36179117/?placementName=sozip_launcher_features">
+                    <script src="//data527.click/js/responsive.js" async></script>
+                </ins>
+            </div>
+
+            <section id="modrinth-browser">
+                <h2>🔍 Built-in Modrinth Browser</h2>
+                <p>Browse and install mods, modpacks, and plugins directly from Modrinth without leaving the launcher.</p>
+                <ul>
+                    <li>Supports Fabric, Forge, NeoForge, Quilt</li>
+                    <li>One-click installation</li>
+                </ul>
+            </section>
+
+            <section id="free-playit-ip">
+                <h2>🌐 Free Playit.gg IP</h2>
+                <p>Get a 1-hour free public IP for your server directly in the launcher — manually renewable!</p>
+                <ul>
+                    <li>1-hour free sessions</li>
+                    <li>Manual renewal</li>
+                    <li>For lifetime IP, use <a href="playit.html" target="_blank">Playit.gg</a></li>
+                </ul>
+            </section>
+
+            <section id="fps-boost">
+                <h2>🚀 FPS Boost</h2>
+                <p>Maximize your performance with optimized settings and recommended modpacks:</p>
+                <ul>
+                    <li>Use <strong>ZIP Boost</strong> modpack on Fabric</li>
+                    <li>Or use <strong>Fabulously Optimized</strong> modpack on Fabric/Quilt</li>
+                    <li>Comparable modpacks for NeoForge and Forge</li>
+                    <li>Built-in performance settings</li>
+                </ul>
+            </section>
+
+            <section id="custom-skin">
+                <h2>🎨 Custom Skin System</h2>
+                <p>Use custom skins and capes:</p>
+                <ul>
+                    <li><strong>Capes:</strong> Use <a href="https://modrinth.com/mod/customskinloader" target="_blank">CustomSkinLoader</a> mod</li>
+                    <li><strong>Skins:</strong> Use <a href="https://ely.by" target="_blank">Ely.by</a> — Sozip Network is now Ely.by!</li>
+                </ul>
+
+                <div class="note">
+                    Upload your skin on <a href="https://ely.by" target="_blank">Ely.by</a>, then in the launcher go to Settings and log in with your Ely.by credentials.
+                </div>
+            </section>
+
+            <section id="migration-wizard">
+                <h2>🔄 Migration Wizard</h2>
+                <p>Switch between Minecraft versions with your mods, worlds, and settings intact — in just one click!</p>
+                <ul>
+                    <li>Auto-migrate mods</li>
+                    <li>Preserve worlds</li>
+                    <li>Keep settings</li>
+                </ul>
+            </section>
+
+            <section id="themes">
+                <h2>🎨 21 Unique Color Themes</h2>
+                <p>Customize your launcher's look with 21 beautiful color themes, plus dark and light appearance modes.</p>
+            </section>
+
+            <section id="multi-account">
+                <h2>👤 Multiple Account Support</h2>
+                <p>Add and switch between multiple Minecraft accounts easily within the launcher.</p>
+            </section>
+
+            <section id="resource-shader">
+                <h2>📦 Resource & Shader Pack Installer</h2>
+                <p>One-click installation for resource packs and shader packs — no manual file moving required!</p>
+            </section>
+
+            <section id="no-premium">
+                <h2>🎮 No Premium Account Required</h2>
+                <p>Play Minecraft without an official Mojang account — completely free.</p>
+            </section>
+
+            <!-- Bottom Banner Ad -->
+            <div class="ad-container">
+                <ins style="width: 728px; max-width: 100%; height: 90px" data-width="728" data-height="90" class="efe36179117" data-domain="//data527.click" data-affquery="/a535c32dacc824a33132/fe36179117/?placementName=sozip_launcher_features">
+                    <script src="//data527.click/js/responsive.js" async></script>
+                </ins>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <div class="logo-icon">
+                    <img src="images/logo.png" alt="Sozip Launcher Logo">
+                </div>
+                <span class="logo-text">Sozip Launcher</span>
+            </div>
+            <p>&copy; 2026 Sozip Launcher | All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html>

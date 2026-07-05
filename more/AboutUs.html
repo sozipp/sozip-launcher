@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About Us | Sozip Launcher</title>
+    <meta name="description" content="Learn about Sozip Launcher and its creator, Sozip19op!">
+    <link rel="icon" type="image/x-icon" href="../images/logo.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --gradient-1: #00f2fe;
+            --gradient-2: #4facfe;
+            --gradient-3: #a855f7;
+            --gradient-4: #ec4899;
+            --dark: #050510;
+            --dark-card: rgba(255, 255, 255, 0.03);
+            --dark-card-strong: rgba(255, 255, 255, 0.06);
+            --border: rgba(255, 255, 255, 0.1);
+            --text: #ffffff;
+            --text-muted: rgba(255, 255, 255, 0.7);
+        }
+
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Outfit', sans-serif; background: var(--dark); color: var(--text); overflow-x: hidden; min-height: 100vh; display: flex; flex-direction: column; }
+
+        /* Animated Background */
+        .animated-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2; background: linear-gradient(135deg, #050510 0%, #0a0e14 100%); }
+        .gradient-orbs { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; overflow: hidden; }
+        .orb { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.4; animation: orb-float 20s ease-in-out infinite; }
+        .orb-1 { width: 600px; height: 600px; background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2)); top: -200px; left: -100px; }
+        .orb-2 { width: 500px; height: 500px; background: linear-gradient(135deg, var(--gradient-3), var(--gradient-4)); bottom: -150px; right: -100px; animation-delay: -10s; }
+        .orb-3 { width: 400px; height: 400px; background: linear-gradient(135deg, #10b981, #06b6d4); top: 40%; right: 20%; animation-delay: -5s; }
+        @keyframes orb-float { 0%, 100% { transform: translate(0, 0) scale(1); } 25% { transform: translate(50px, -50px) scale(1.1); } 50% { transform: translate(-30px, 30px) scale(0.95); } 75% { transform: translate(-50px, -30px) scale(1.05); } }
+        .grid-lines { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px); background-size: 50px 50px; pointer-events: none; }
+
+        /* Navbar */
+        nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; padding: 1.2rem 2rem; background: rgba(5, 5, 16, 0.7); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px); border-bottom: 1px solid var(--border); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        nav.scrolled { padding: 0.8rem 2rem; background: rgba(5, 5, 16, 0.9); }
+        .nav-container { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .logo { display: flex; align-items: center; gap: 12px; font-size: 1.6rem; font-weight: 900; letter-spacing: -0.5px; text-decoration: none; }
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            background: transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 40px rgba(79, 172, 254, 0.4);
+        }
+
+        .logo-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        .logo-text { background: linear-gradient(135deg, var(--gradient-1), var(--gradient-3)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+        .nav-links a { color: var(--text-muted); text-decoration: none; font-weight: 500; font-size: 0.95rem; transition: all 0.3s ease; position: relative; padding: 0.5rem 0; }
+        .nav-links a::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background: linear-gradient(90deg, var(--gradient-1), var(--gradient-3)); transition: width 0.3s ease; border-radius: 2px; }
+        .nav-links a:hover { color: var(--text); }
+        .nav-links a:hover::after { width: 100%; }
+        .nav-buttons { display: flex; gap: 1rem; }
+        .btn { display: inline-flex; align-items: center; gap: 8px; padding: 0.9rem 1.8rem; border-radius: 16px; font-weight: 600; text-decoration: none; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; border: none; font-size: 0.95rem; font-family: 'Outfit', sans-serif; }
+        .btn-primary { background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2), var(--gradient-3)); background-size: 200% 200%; color: white; box-shadow: 0 10px 40px rgba(79, 172, 254, 0.3); animation: gradient-shift 4s ease infinite; }
+        @keyframes gradient-shift { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+        .btn-primary:hover { transform: translateY(-4px) scale(1.02); box-shadow: 0 20px 60px rgba(79, 172, 254, 0.4); }
+        .btn-secondary { background: var(--dark-card); color: white; border: 1px solid var(--border); backdrop-filter: blur(10px); }
+        .btn-secondary:hover { background: var(--dark-card-strong); border-color: rgba(255, 255, 255, 0.2); transform: translateY(-3px); }
+        .mobile-menu-btn { display: none; background: var(--dark-card); border: 1px solid var(--border); width: 48px; height: 48px; border-radius: 12px; color: white; font-size: 1.5rem; cursor: pointer; }
+
+        /* Content */
+        .page-content { flex: 1; padding: 10rem 2rem 4rem; display: flex; justify-content: center; align-items: center; }
+        .card { background: var(--dark-card); padding: 3rem; border-radius: 24px; box-shadow: 0 20px 60px rgba(0,0,0,0.9); max-width: 900px; width: 100%; border: 1px solid var(--border); animation: fadeUp 0.8s ease; backdrop-filter: blur(10px); }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: none; } }
+
+        .header-section { text-align: center; margin-bottom: 2.5rem; }
+        .tagline { color: var(--gradient-2); font-weight: 700; letter-spacing: 2px; text-transform: uppercase; font-size: 0.875rem; }
+        .header-section h1 { font-size: clamp(2rem, 4vw, 2.75rem); font-weight: 900; background: linear-gradient(90deg, var(--gradient-1), var(--gradient-3)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-top: 0.5rem; }
+
+        .content-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; margin-top: 1.75rem; line-height: 1.8; }
+        .bio h2, .mission h2 { color: #fff; margin-bottom: 1rem; font-size: 1.375rem; border-left: 4px solid var(--gradient-2); padding-left: 0.9375rem; font-weight: 800; }
+        .bio p, .mission p { color: var(--text-muted); font-size: 1rem; }
+        .bio b, .mission b { color: white; }
+
+        /* Social Section */
+        .social-container { margin-top: 3rem; padding: 1.75rem; background: var(--dark-card); border-radius: 20px; border: 1px solid var(--border); text-align: center; }
+        .social-container h3 { font-size: 1.5rem; font-weight: 800; margin-bottom: 0.5rem; }
+        .social-container p { color: rgba(255,255,255,0.5); font-size: 0.9375rem; margin-bottom: 1.25rem; }
+        .social-links { display: flex; justify-content: center; gap: 1.25rem; margin-top: 1.25rem; flex-wrap: wrap; }
+        .social-btn { padding: 0.875rem 1.5625rem; border-radius: 14px; text-decoration: none; color: white; font-weight: 700; font-size: 0.9375rem; transition: all 0.3s ease; display: flex; align-items: center; gap: 0.625rem; }
+        .yt-btn { background: #ff0000; box-shadow: 0 5px 15px rgba(255, 0, 0, 0.2); }
+        .ds-btn { background: #5865F2; box-shadow: 0 5px 15px rgba(88, 101, 242, 0.2); }
+        .pf-btn { background: linear-gradient(135deg, #444, #222); border: 1px solid rgba(255,255,255,0.15); box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); }
+        .social-btn:hover { transform: translateY(-3px); filter: brightness(1.15); }
+
+        .footer-text { text-align: center; margin-top: 2.5rem; font-size: 0.875rem; color: rgba(255,255,255,0.5); }
+        .flag-icon { color: #28a745; font-weight: 800; }
+
+        @media (max-width: 968px) {
+            .nav-links, .nav-buttons { display: none; }
+            .mobile-menu-btn { display: block; }
+            .content-grid { grid-template-columns: 1fr; }
+            .card { padding: 2rem; }
+            .social-links { flex-direction: column; align-items: stretch; }
+        }
+    </style>
+</head>
+<body>
+    <div class="animated-bg"></div>
+    <div class="gradient-orbs">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+    <div class="grid-lines"></div>
+
+    <nav>
+        <div class="nav-container">
+            <a href="../index.html" class="logo">
+                <div class="logo-icon"><img src="../images/logo.png" alt="Sozip Launcher Logo"></div>
+                <span class="logo-text">Sozip Launcher</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="../index.html#features">Features</a></li>
+                <li><a href="../index.html#screenshots">Screenshots</a></li>
+                <li><a href="../download.html">Download</a></li>
+                <li><a href="../tutorial.html">Tutorial</a></li>
+            </ul>
+            <div class="nav-buttons">
+                <a href="../upload.html" class="btn btn-secondary">Ely.by Skins</a>
+                <a href="../download.html" class="btn btn-primary">
+                    <span>Download Now</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="7 10 12 15 17 10"></polyline>
+                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                    </svg>
+                </a>
+            </div>
+            <button class="mobile-menu-btn">☰</button>
+        </div>
+    </nav>
+
+    <div class="page-content">
+        <div class="card">
+            <div class="header-section">
+                <p class="tagline">The Face Behind The Project</p>
+                <h1>About Sozip</h1>
+            </div>
+
+            <div class="content-grid">
+                <div class="bio">
+                    <h2>The Creator</h2>
+                    <p>
+                        <b>Sozip19op</b> is a passionate Pakistani Minecraft creator and developer dedicated to enhancing the gaming experience for the global community. 
+                        With a deep understanding of the Minecraft ecosystem, he builds tools that bridge the gap between players and the game they love.
+                    </p>
+                </div>
+                <div class="mission">
+                    <h2>The Launcher</h2>
+                    <p>
+                        <b>Sozip Launcher</b> was born from a simple mission: to make Minecraft 100% accessible and free for every player. 
+                        It is a lightweight, high-performance launcher designed to be stable, secure, and user-friendly, ensuring that your focus stays on building your world.
+                    </p>
+                </div>
+            </div>
+
+            <div class="social-container">
+                <h3>Join the Community & Developer</h3>
+                <p>Follow for updates, support, and my official developer profile.</p>
+                
+                <div class="social-links">
+                    <a href="https://youtube.com/@sozip19op" target="_blank" class="social-btn yt-btn">
+                        YouTube
+                    </a>
+                    <a href="https://discord.com/users/sozip19op" target="_blank" class="social-btn ds-btn">
+                        Discord: sozip19op
+                    </a>
+                    <a href="../portfolio.html" class="social-btn pf-btn">
+                        Official Portfolio
+                    </a>
+                </div>
+            </div>
+
+            <p class="footer-text">
+                Proudly Representing <span class="flag-icon">Pakistan 🇵🇰</span> in the Minecraft Dev Scene
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html>
