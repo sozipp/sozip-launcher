@@ -700,104 +700,123 @@
         // Store the update data globally
         let updateData = null;
 
-        // Clean up URLs (remove backticks and quotes)
-        const cleanURL = (url) => url ? url.replace(/`/g, '').replace(/"/g, '').replace(/'/g, '').trim() : '';
-
-        // Fix GitHub URLs properly
-        const fixGitHubURL = (url) => {
+        // Clean up URLs (remove backticks, quotes, whitespace, etc.)
+        function cleanURL(url) {
             if (!url) return '';
-            url = cleanURL(url);
-            // Convert blob URLs to raw
-            if (url.includes('/blob/')) {
-                return url.replace('/blob/', '/raw/');
-            }
-            // Fix the invalid /main/releases/ URL format
-            if (url.includes('/main/releases/')) {
-                return url.replace('/main/releases/', '/releases/download/');
-            }
-            return url;
-        };
+            let cleaned = String(url);
+            // Remove backticks, single quotes, double quotes
+            cleaned = cleaned.replace(/`/g, '').replace(/"/g, '').replace(/'/g, '');
+            // Trim whitespace
+            cleaned = cleaned.trim();
+            return cleaned;
+        }
 
-        // Fetch download links from UPDATE.json
+        // Fix GitHub URLs properly (blob → raw, /main/releases/ → /releases/download/)
+        function fixGitHubURL(url) {
+            if (!url) return '';
+            let fixed = cleanURL(url);
+            
+            // Fix blob URLs to raw
+            if (fixed.includes('/blob/')) {
+                fixed = fixed.replace('/blob/', '/raw/');
+            }
+            
+            // Fix invalid /main/releases/ format
+            if (fixed.includes('/main/releases/')) {
+                fixed = fixed.replace('/main/releases/', '/releases/download/');
+            }
+            
+            return fixed;
+        }
+
+        // Fetch download links from UPDATE.json (RAW URL!)
         async function fetchDownloadLinks() {
             try {
-                console.log("Fetching UPDATE.json...");
-                const response = await fetch("https://raw.githubusercontent.com/sozipp/LAUNCHER-UPDATER/main/UPDATE.json?cb=" + Date.now() + "&_t=" + Math.random(), {
-                    cache: 'no-store',
-                    headers: {
-                        'Cache-Control': 'no-cache',
-                        'Pragma': 'no-cache'
+                console.log("🔄 Fetching UPDATE.json from GitHub...");
+                
+                const response = await fetch(
+                    "https://raw.githubusercontent.com/sozipp/LAUNCHER-UPDATER/main/UPDATE.json?cb=" + Date.now() + "&_t=" + Math.random(),
+                    {
+                        cache: 'no-store',
+                        headers: {
+                            'Cache-Control': 'no-cache, no-store, must-revalidate',
+                            'Pragma': 'no-cache',
+                            'Expires': '0'
+                        }
                     }
-                });
+                );
+
+                if (!response.ok) {
+                    throw new Error("HTTP error! Status: " + response.status);
+                }
+
                 updateData = await response.json();
                 
-                console.log("Update data fetched successfully:", updateData);
+                console.log("✅ UPDATE.json fetched successfully:", updateData);
                 
-                // Update version text
-                if (updateData.latest_version) {
+                // Update version text on page
+                if (updateData && updateData.latest_version) {
                     document.getElementById("windows-version").textContent = "Sozip Launcher " + updateData.latest_version;
                     document.getElementById("linux-version").textContent = "Sozip Launcher " + updateData.latest_version;
                 }
             } catch(e) {
-                console.error("Failed to fetch update info:", e);
+                console.error("❌ Failed to fetch UPDATE.json:", e);
             }
         }
 
-        // Windows download handler
+        // Windows download handler (uses download_windows_bat)
         document.getElementById("download-windows").onclick = function() {
-            console.log("Windows download button clicked!");
+            console.log("🪟 Windows download button clicked!");
             
-            // First increment the download count (don't await)
+            // Increment download count
             increaseDownload();
             
-            // Get the URL from update data and open it
-            let downloadURL = null;
+            // Get the correct download URL
+            let finalURL = null;
             
             if (updateData && updateData.download_windows_bat) {
-                downloadURL = fixGitHubURL(updateData.download_windows_bat);
+                finalURL = fixGitHubURL(updateData.download_windows_bat);
             } else if (updateData && updateData.download_windows) {
-                downloadURL = fixGitHubURL(updateData.download_windows);
+                finalURL = fixGitHubURL(updateData.download_windows);
             }
             
-            console.log("Using download URL:", downloadURL);
+            console.log("📥 Using Windows download URL:", finalURL);
             
-            if (downloadURL) {
-                window.open(downloadURL, "_blank");
+            if (finalURL) {
+                window.open(finalURL, "_blank");
             } else {
-                // Fallback to releases page
-                console.log("No URL found, using fallback releases page");
+                console.warn("⚠️ No URL found, falling back to releases page!");
                 window.open("https://github.com/sozipp/LAUNCHER-UPDATER/releases", "_blank");
             }
         };
 
-        // Linux download handler
+        // Linux download handler (uses download_linux_sh)
         document.getElementById("download-linux").onclick = function() {
-            console.log("Linux download button clicked!");
+            console.log("🐧 Linux download button clicked!");
             
-            // First increment the download count (don't await)
+            // Increment download count
             increaseDownload();
             
-            // Get the URL from update data and open it
-            let downloadURL = null;
+            // Get the correct download URL
+            let finalURL = null;
             
             if (updateData && updateData.download_linux_sh) {
-                downloadURL = fixGitHubURL(updateData.download_linux_sh);
+                finalURL = fixGitHubURL(updateData.download_linux_sh);
             } else if (updateData && updateData.download_linux) {
-                downloadURL = fixGitHubURL(updateData.download_linux);
+                finalURL = fixGitHubURL(updateData.download_linux);
             }
             
-            console.log("Using download URL:", downloadURL);
+            console.log("📥 Using Linux download URL:", finalURL);
             
-            if (downloadURL) {
-                window.open(downloadURL, "_blank");
+            if (finalURL) {
+                window.open(finalURL, "_blank");
             } else {
-                // Fallback to releases page
-                console.log("No URL found, using fallback releases page");
+                console.warn("⚠️ No URL found, falling back to releases page!");
                 window.open("https://github.com/sozipp/LAUNCHER-UPDATER/releases", "_blank");
             }
         };
 
-        // Initialize
+        // Initialize everything when page loads
         updateCounter();
         fetchDownloadLinks();
     </script>
