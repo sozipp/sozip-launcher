@@ -375,13 +375,6 @@
             margin-bottom: 2rem;
         }
 
-        .download-links {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
         /* Footer */
         footer {
             background: var(--dark-card);
@@ -468,9 +461,6 @@
                 <div class="version-badge" id="version-badge">Loading...</div>
                 <h2 class="changelog-title">Changelog</h2>
                 <p class="changelog-text" id="changelog-text">Fetching latest update...</p>
-                <div class="download-links" id="download-links">
-                    <!-- Download links will be added here -->
-                </div>
             </div>
         </div>
     </div>
@@ -498,88 +488,19 @@
             }
         });
 
-        // Counter script
-        const API = "https://kmm-8eff.minecraftserversozip.workers.dev";
-
-        async function increaseDownload() {
-            try {
-                await fetch(API + "/hit");
-            } catch(e) {
-                console.error("Hit error:", e);
-            }
-        }
-
-        // Clean up URLs (remove backticks and quotes)
-        const cleanURL = (url) => url ? url.replace(/`/g, '').replace(/"/g, '').replace(/'/g, '').trim() : '';
-
-        // Fix GitHub URLs properly
-        const fixGitHubURL = (url) => {
-            if (!url) return '';
-            url = cleanURL(url);
-            // Convert blob URLs to raw
-            if (url.includes('/blob/')) {
-                return url.replace('/blob/', '/raw/');
-            }
-            // Fix the invalid /main/releases/ URL format
-            if (url.includes('/main/releases/')) {
-                return url.replace('/main/releases/', '/releases/download/');
-            }
-            return url;
-        };
-
-        // Store update data
-        let updateData = null;
-
-        // Windows download handler
-        function handleWindowsDownload() {
-            increaseDownload();
-            if (updateData && updateData.download_windows_bat) {
-                window.open(fixGitHubURL(updateData.download_windows_bat), '_blank');
-            } else if (updateData && updateData.download_windows) {
-                window.open(fixGitHubURL(updateData.download_windows), '_blank');
-            }
-        }
-
-        // Linux download handler
-        function handleLinuxDownload() {
-            increaseDownload();
-            if (updateData && updateData.download_linux_sh) {
-                window.open(fixGitHubURL(updateData.download_linux_sh), '_blank');
-            } else if (updateData && updateData.download_linux) {
-                window.open(fixGitHubURL(updateData.download_linux), '_blank');
-            }
-        }
-
         // Fetch update data
         async function fetchUpdate() {
             try {
                 const response = await fetch('https://raw.githubusercontent.com/sozipp/LAUNCHER-UPDATER/main/UPDATE.json?t=' + Date.now());
-                updateData = await response.json();
+                const data = await response.json();
 
                 // Update the UI
-                document.getElementById('version-badge').textContent = `v${updateData.latest_version}`;
-                document.getElementById('changelog-text').textContent = updateData.changelog;
+                document.getElementById('version-badge').textContent = `v${data.latest_version}`;
+                document.getElementById('changelog-text').textContent = data.changelog;
 
-                // Add download buttons
+                // Remove download links section
                 const downloadLinksDiv = document.getElementById('download-links');
-                downloadLinksDiv.innerHTML = `
-                    <button class="btn btn-primary" onclick="handleWindowsDownload()">
-                        <span>Download for Windows</span>
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                            <polyline points="7 10 12 15 17 10"></polyline>
-                            <line x1="12" y1="15" x2="12" y2="3"></line>
-                        </svg>
-                    </button>
-                    <button class="btn btn-secondary" onclick="handleLinuxDownload()">
-                        <span>Download for Linux</span>
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                            <polyline points="7 10 12 15 17 10"></polyline>
-                            <line x1="12" y1="15" x2="12" y2="3"></line>
-                        </svg>
-                    </button>
-                `;
+                downloadLinksDiv.innerHTML = '';
             } catch (error) {
                 console.error('Error fetching update:', error);
                 document.getElementById('version-badge').textContent = 'Error';
