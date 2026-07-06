@@ -687,8 +687,11 @@
         // Fetch download links from UPDATE.json with fallback
         async function fetchDownloadLinks() {
             try {
-                const response = await fetch("https://raw.githubusercontent.com/sozipp/LAUNCHER-UPDATER/main/UPDATE.json");
+                // Add cache-busting parameter to get the latest version
+                const response = await fetch("https://raw.githubusercontent.com/sozipp/LAUNCHER-UPDATER/main/UPDATE.json?t=" + Date.now());
                 const data = await response.json();
+                
+                console.log("Fetched update data:", data);
                 
                 const windowsBtn = document.getElementById("download-windows");
                 const linuxBtn = document.getElementById("download-linux");
@@ -696,7 +699,7 @@
                 const linuxVersion = document.getElementById("linux-version");
                 
                 // Clean up URLs (remove backticks and extra spaces)
-                const cleanURL = (url) => url ? url.replace(/`/g, '').trim() : '';
+                const cleanURL = (url) => url ? url.replace(/`/g, '').replace(/"/g, '').trim() : '';
                 
                 // Fix GitHub URLs properly
                 const fixGitHubURL = (url) => {
@@ -713,17 +716,43 @@
                     return url;
                 };
                 
-                // Update links if data is valid
-                if (data.download_windows_bat) {
-                    windowsBtn.href = fixGitHubURL(data.download_windows_bat);
+                // Auto-detect OS for best link selection
+                const userAgent = navigator.userAgent.toLowerCase();
+                const isWindows = userAgent.includes('win');
+                const isLinux = userAgent.includes('linux');
+                
+                // Update links based on OS preference
+                if (isWindows) {
+                    // Priority: download_windows_bat > download_windows
+                    if (data.download_windows_bat) {
+                        windowsBtn.href = fixGitHubURL(data.download_windows_bat);
+                    } else if (data.download_windows) {
+                        windowsBtn.href = fixGitHubURL(data.download_windows);
+                    }
+                } else if (isLinux) {
+                    // Priority: download_linux_sh > download_linux
+                    if (data.download_linux_sh) {
+                        linuxBtn.href = fixGitHubURL(data.download_linux_sh);
+                    } else if (data.download_linux) {
+                        linuxBtn.href = fixGitHubURL(data.download_linux);
+                    }
+                } else {
+                    // Fallback - just use primary links for other OS
+                    if (data.download_windows) {
+                        windowsBtn.href = fixGitHubURL(data.download_windows);
+                    }
+                    if (data.download_linux) {
+                        linuxBtn.href = fixGitHubURL(data.download_linux);
+                    }
                 }
-                if (data.download_linux_sh) {
-                    linuxBtn.href = fixGitHubURL(data.download_linux_sh);
-                }
+                
+                // Update version text
                 if (data.latest_version) {
                     windowsVersion.textContent = "Sozip Launcher " + data.latest_version;
                     linuxVersion.textContent = "Sozip Launcher " + data.latest_version;
                 }
+                
+                console.log("Download links updated successfully!");
             } catch(e) {
                 console.error("Failed to fetch update info, using fallback links:", e);
             }
