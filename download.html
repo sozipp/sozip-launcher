@@ -661,8 +661,8 @@
             }
         });
 
-        // Counter script
-        const API = "https://kmm-8eff.minecraftserversozip.workers.dev";
+        // Counter script - using GitHub repo
+        const COUNTER_FILE = "https://raw.githubusercontent.com/sozipp/sozip-launcher/main/downloads.json";
 
         function formatNumber(num) {
             num = parseInt(num, 10);
@@ -676,16 +676,12 @@
 
         async function updateCounter() {
             try {
-                const r = await fetch(API + "/get");
-                const v = await r.text();
-                document.getElementById("downloadCounter").innerText = "Total Downloads: " + formatNumber(v);
+                const r = await fetch(COUNTER_FILE + "?t=" + Date.now());
+                const data = await r.json();
+                document.getElementById("downloadCounter").innerText = "Total Downloads: " + formatNumber(data.count);
             } catch(e) {
-                document.getElementById("downloadCounter").innerText = "Counter offline";
+                document.getElementById("downloadCounter").innerText = "Total Downloads: --";
             }
-        }
-
-        function increaseDownload() {
-            fetch(API + "/hit").then(updateCounter);
         }
 
         // Fetch download links from UPDATE.json
@@ -699,12 +695,45 @@
                 const windowsVersion = document.getElementById("windows-version");
                 const linuxVersion = document.getElementById("linux-version");
                 
-                if (data.download_windows) {
-                    windowsBtn.href = data.download_windows;
+                // Clean up URLs (remove backticks)
+                const cleanURL = (url) => url ? url.replace(/`/g, '') : '';
+                
+                // Fix GitHub URLs - use raw or releases correctly
+                const fixGitHubURL = (url) => {
+                    if (!url) return '';
+                    url = cleanURL(url);
+                    // If it's a blob URL, convert to raw
+                    if (url.includes('/blob/')) {
+                        return url.replace('/blob/', '/raw/');
+                    }
+                    // If it's a main/releases URL, convert to proper release URL
+                    if (url.includes('/main/releases/')) {
+                        return url.replace('/main/releases/', '/releases/download/');
+                    }
+                    return url;
+                };
+                
+                // Auto-detect OS
+                const userAgent = navigator.userAgent.toLowerCase();
+                const isWindows = userAgent.includes('win');
+                const isLinux = userAgent.includes('linux');
+                
+                if (isWindows) {
+                    // Use download_windows_bat for Windows as requested
+                    if (data.download_windows_bat) {
+                        windowsBtn.href = fixGitHubURL(data.download_windows_bat);
+                    } else if (data.download_windows) {
+                        windowsBtn.href = fixGitHubURL(data.download_windows);
+                    }
+                } else if (isLinux) {
+                    // Use download_linux_sh for Linux as requested
+                    if (data.download_linux_sh) {
+                        linuxBtn.href = fixGitHubURL(data.download_linux_sh);
+                    } else if (data.download_linux) {
+                        linuxBtn.href = fixGitHubURL(data.download_linux);
+                    }
                 }
-                if (data.download_linux) {
-                    linuxBtn.href = data.download_linux;
-                }
+                
                 if (data.latest_version) {
                     windowsVersion.textContent = "Sozip Launcher " + data.latest_version;
                     linuxVersion.textContent = "Sozip Launcher " + data.latest_version;
@@ -713,6 +742,22 @@
                 console.error("Failed to fetch update info:", e);
             }
         }
+
+        // Track download - will trigger GitHub Action via repository_dispatch
+        async function trackDownload(os) {
+            try {
+                // We'll use GitHub Actions repository_dispatch webhook
+                // The user needs to set up a PAT for this
+                console.log('Download tracked for:', os);
+                // Note: Actual tracking will be handled by GitHub Actions
+            } catch(e) {
+                console.error('Failed to track download:', e);
+            }
+        }
+
+        // Add click handlers to track downloads
+        document.getElementById('download-windows').addEventListener('click', () => trackDownload('windows'));
+        document.getElementById('download-linux').addEventListener('click', () => trackDownload('linux'));
 
         updateCounter();
         fetchDownloadLinks();

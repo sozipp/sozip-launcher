@@ -1,0 +1,45 @@
+name: Track Downloads
+
+on:
+  repository_dispatch:
+    types: [download]
+  workflow_dispatch:
+
+jobs:
+  update-counter:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Update downloads.json
+        run: |
+          # Read current count
+          if [ -f downloads.json ]; then
+            CURRENT_COUNT=$(jq -r '.count' downloads.json)
+          else
+            CURRENT_COUNT=0
+          fi
+          
+          # Increment count
+          NEW_COUNT=$((CURRENT_COUNT + 1))
+          
+          # Update file
+          cat > downloads.json <<EOF
+          {
+            "count": $NEW_COUNT,
+            "last_updated": "$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
+          }
+          EOF
+          
+          echo "Count updated from $CURRENT_COUNT to $NEW_COUNT"
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add downloads.json
+          git commit -m "Update download count: $NEW_COUNT" || echo "No changes to commit"
+          git push
