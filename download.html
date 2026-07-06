@@ -721,6 +721,7 @@
         // Fetch download links from UPDATE.json
         async function fetchDownloadLinks() {
             try {
+                console.log("Fetching UPDATE.json...");
                 const response = await fetch("https://raw.githubusercontent.com/sozipp/LAUNCHER-UPDATER/main/UPDATE.json?cb=" + Date.now() + "&_t=" + Math.random(), {
                     cache: 'no-store',
                     headers: {
@@ -730,7 +731,7 @@
                 });
                 updateData = await response.json();
                 
-                console.log("Update data fetched:", updateData);
+                console.log("Update data fetched successfully:", updateData);
                 
                 // Update version text
                 if (updateData.latest_version) {
@@ -743,34 +744,56 @@
         }
 
         // Windows download handler
-        document.getElementById("download-windows").onclick = async function() {
-            try {
-                // First increment the download count
-                await increaseDownload();
-                
-                // Then get the URL from update data and open it
-                if (updateData && updateData.download_windows_bat) {
-                    const downloadURL = fixGitHubURL(updateData.download_windows_bat);
-                    window.open(downloadURL, "_blank");
-                }
-            } catch(e) {
-                console.error("Download error:", e);
+        document.getElementById("download-windows").onclick = function() {
+            console.log("Windows download button clicked!");
+            
+            // First increment the download count (don't await)
+            increaseDownload();
+            
+            // Get the URL from update data and open it
+            let downloadURL = null;
+            
+            if (updateData && updateData.download_windows_bat) {
+                downloadURL = fixGitHubURL(updateData.download_windows_bat);
+            } else if (updateData && updateData.download_windows) {
+                downloadURL = fixGitHubURL(updateData.download_windows);
+            }
+            
+            console.log("Using download URL:", downloadURL);
+            
+            if (downloadURL) {
+                window.open(downloadURL, "_blank");
+            } else {
+                // Fallback to releases page
+                console.log("No URL found, using fallback releases page");
+                window.open("https://github.com/sozipp/LAUNCHER-UPDATER/releases", "_blank");
             }
         };
 
         // Linux download handler
-        document.getElementById("download-linux").onclick = async function() {
-            try {
-                // First increment the download count
-                await increaseDownload();
-                
-                // Then get the URL from update data and open it
-                if (updateData && updateData.download_linux_sh) {
-                    const downloadURL = fixGitHubURL(updateData.download_linux_sh);
-                    window.open(downloadURL, "_blank");
-                }
-            } catch(e) {
-                console.error("Download error:", e);
+        document.getElementById("download-linux").onclick = function() {
+            console.log("Linux download button clicked!");
+            
+            // First increment the download count (don't await)
+            increaseDownload();
+            
+            // Get the URL from update data and open it
+            let downloadURL = null;
+            
+            if (updateData && updateData.download_linux_sh) {
+                downloadURL = fixGitHubURL(updateData.download_linux_sh);
+            } else if (updateData && updateData.download_linux) {
+                downloadURL = fixGitHubURL(updateData.download_linux);
+            }
+            
+            console.log("Using download URL:", downloadURL);
+            
+            if (downloadURL) {
+                window.open(downloadURL, "_blank");
+            } else {
+                // Fallback to releases page
+                console.log("No URL found, using fallback releases page");
+                window.open("https://github.com/sozipp/LAUNCHER-UPDATER/releases", "_blank");
             }
         };
 
