@@ -661,8 +661,8 @@
             }
         });
 
-        // Counter script - using GitHub repo
-        const COUNTER_FILE = "https://raw.githubusercontent.com/sozipp/sozip-launcher/main/downloads.json";
+        // Counter script
+        const API = "https://kmm-8eff.minecraftserversozip.workers.dev";
 
         function formatNumber(num) {
             num = parseInt(num, 10);
@@ -676,12 +676,16 @@
 
         async function updateCounter() {
             try {
-                const r = await fetch(COUNTER_FILE + "?t=" + Date.now());
-                const data = await r.json();
-                document.getElementById("downloadCounter").innerText = "Total Downloads: " + formatNumber(data.count);
+                const r = await fetch(API + "/get");
+                const v = await r.text();
+                document.getElementById("downloadCounter").innerText = "Total Downloads: " + formatNumber(v);
             } catch(e) {
                 document.getElementById("downloadCounter").innerText = "Total Downloads: --";
             }
+        }
+
+        function increaseDownload() {
+            fetch(API + "/hit").then(updateCounter);
         }
 
         // Fetch download links from UPDATE.json with fallback
@@ -698,8 +702,8 @@
                 const windowsVersion = document.getElementById("windows-version");
                 const linuxVersion = document.getElementById("linux-version");
                 
-                // Clean up URLs (remove backticks and extra spaces)
-                const cleanURL = (url) => url ? url.replace(/`/g, '').replace(/"/g, '').trim() : '';
+                // Clean up URLs (remove backticks, quotes, and extra spaces)
+                const cleanURL = (url) => url ? url.replace(/`/g, '').replace(/"/g, '').replace(/'/g, '').trim() : '';
                 
                 // Fix GitHub URLs properly
                 const fixGitHubURL = (url) => {
@@ -729,6 +733,10 @@
                     } else if (data.download_windows) {
                         windowsBtn.href = fixGitHubURL(data.download_windows);
                     }
+                    // Add click handler to count downloads
+                    windowsBtn.onclick = function() {
+                        increaseDownload();
+                    };
                 } else if (isLinux) {
                     // Priority: download_linux_sh > download_linux
                     if (data.download_linux_sh) {
@@ -736,6 +744,10 @@
                     } else if (data.download_linux) {
                         linuxBtn.href = fixGitHubURL(data.download_linux);
                     }
+                    // Add click handler to count downloads
+                    linuxBtn.onclick = function() {
+                        increaseDownload();
+                    };
                 } else {
                     // Fallback - just use primary links for other OS
                     if (data.download_windows) {
@@ -744,6 +756,9 @@
                     if (data.download_linux) {
                         linuxBtn.href = fixGitHubURL(data.download_linux);
                     }
+                    // Add click handlers
+                    windowsBtn.onclick = increaseDownload;
+                    linuxBtn.onclick = increaseDownload;
                 }
                 
                 // Update version text

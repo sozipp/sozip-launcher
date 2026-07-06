@@ -920,8 +920,8 @@
             }
         });
 
-        // Counter script - using GitHub repo
-        const COUNTER_FILE = "https://raw.githubusercontent.com/sozipp/sozip-launcher/main/downloads.json";
+        // Counter script
+        const API = "https://kmm-8eff.minecraftserversozip.workers.dev";
 
         function formatNumber(num) {
             num = parseInt(num, 10);
@@ -935,11 +935,11 @@
 
         async function updateCounter() {
             try {
-                const r = await fetch(COUNTER_FILE + "?t=" + Date.now());
-                const data = await r.json();
-                document.getElementById("downloadCounter").innerText = formatNumber(data.count);
+                const r = await fetch(API + "/get");
+                const v = await r.text();
+                document.getElementById("downloadCounter").innerText = formatNumber(v);
             } catch(e) {
-                document.getElementById("downloadCounter").innerText = "--";
+                document.getElementById("downloadCounter").innerText = "Offline";
             }
         }
 
