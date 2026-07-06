@@ -721,7 +721,13 @@
         // Fetch download links from UPDATE.json
         async function fetchDownloadLinks() {
             try {
-                const response = await fetch("https://raw.githubusercontent.com/sozipp/LAUNCHER-UPDATER/main/UPDATE.json?t=" + Date.now());
+                const response = await fetch("https://raw.githubusercontent.com/sozipp/LAUNCHER-UPDATER/main/UPDATE.json?cb=" + Date.now() + "&_t=" + Math.random(), {
+                    cache: 'no-store',
+                    headers: {
+                        'Cache-Control': 'no-cache',
+                        'Pragma': 'no-cache'
+                    }
+                });
                 updateData = await response.json();
                 
                 console.log("Update data fetched:", updateData);

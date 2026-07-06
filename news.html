@@ -491,7 +491,13 @@
         // Fetch update data
         async function fetchUpdate() {
             try {
-                const response = await fetch('https://raw.githubusercontent.com/sozipp/LAUNCHER-UPDATER/main/UPDATE.json?t=' + Date.now());
+                const response = await fetch('https://raw.githubusercontent.com/sozipp/LAUNCHER-UPDATER/main/UPDATE.json?cb=' + Date.now() + '&_t=' + Math.random(), {
+                    cache: 'no-store',
+                    headers: {
+                        'Cache-Control': 'no-cache',
+                        'Pragma': 'no-cache'
+                    }
+                });
                 const data = await response.json();
 
                 // Update the UI
