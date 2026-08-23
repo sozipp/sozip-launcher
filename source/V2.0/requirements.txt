@@ -1,0 +1,8 @@
+customtkinter
+minecraft-launcher-lib
+portablemc
+psutil
+requests
+Pillow
+certifi
+pypresence
