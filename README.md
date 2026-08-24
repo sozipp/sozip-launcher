@@ -181,7 +181,7 @@ https://youtube.com/@sozip19op
 
  You can find the latest SOZIP Launcher releases on the 
  official website : https://sozipp.github.io/sozip-launcher/index.html
- or Updater GitHub repository : https://github.com/sozipp/LAUNCHER-UPDATER
+ or Github release : https://github.com/sozipp/sozip-launcher/releases
 
 ## ❤️ SOZIP
 
