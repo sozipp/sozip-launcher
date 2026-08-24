@@ -1,0 +1,21 @@
+THIRD-PARTY-NOTICES
+
+SOZIP Launcher uses third-party software and libraries. Their respective
+copyrights and licenses remain applicable and are not replaced by the
+SOZIP Launcher GPL-3.0 license.
+
+Third-party dependencies include:
+
+- CustomTkinter — MIT License
+- minecraft-launcher-lib — BSD-2-Clause License
+- Requests — Apache License 2.0
+- Pillow — HPND / MIT-CMU License
+- psutil — BSD-3-Clause License
+- certifi — Mozilla Public License 2.0
+- PyPresence — MIT License
+
+Minecraft, mods, modpacks, plugins, assets, and other downloaded content
+remain subject to their respective owners' licenses and terms.
+
+For the complete license terms of each dependency, refer to the
+corresponding project's official license and copyright notices.
