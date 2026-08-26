@@ -711,7 +711,7 @@
             return cleaned;
         }
 
-        // Fix GitHub URLs properly (blob → raw, /main/releases/ → /releases/download/)
+        // Fix GitHub URLs properly (blob → raw, /main// → /releases/download/)
         function fixGitHubURL(url) {
             if (!url) return '';
             let fixed = cleanURL(url);
@@ -786,7 +786,7 @@
                 window.open(finalURL, "_blank");
             } else {
                 console.warn("⚠️ No URL found, falling back to releases page!");
-                window.open("https://github.com/sozipp/sozip-launcher/releases", "_blank");
+                window.open("https://sozipp.github.io/sozip-launcher/more/down.html", "_blank");
             }
         };
 
@@ -812,7 +812,7 @@
                 window.open(finalURL, "_blank");
             } else {
                 console.warn("⚠️ No URL found, falling back to releases page!");
-                window.open("https://github.com/sozipp/sozip-launcher/releases", "_blank");
+                window.open("https://sozipp.github.io/sozip-launcher/more/down.html", "_blank");
             }
         };
 
